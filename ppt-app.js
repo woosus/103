@@ -32,8 +32,15 @@
   window.addEventListener('load', recalc);
 
   function buildCandidates(name){
-    const out = new Set([name,'쿠폰신청하기.mp4','쿠폰신청하기1.mp4','긴급쿠폰신청.mp4','긴급쿠폰신청1.mp4']);
-    return [...out].filter(Boolean).map(s => /^https?:/.test(s)||s.startsWith('assets/') ? s : `assets/${s}`);
+    const set = new Set([
+      name,
+      cfg.VIDEO_PROMO, cfg.VIDEO_COUPON_APPLY, cfg.VIDEO_EMERGENCY,
+      '쿠폰신청하기.mp4','쿠폰신청하기1.mp4',
+      '긴급쿠폰신청.mp4','긴급쿠폰신청1.mp4',
+      '프로모션.mp4','promotion.mp4','promo.mp4',
+      '1033333333.mp4','emergency-bg.mp4'
+    ]);
+    return [...set].filter(Boolean).map(s => /^https?:/.test(s)||s.startsWith('assets/') ? s : `assets/${s}`);
   }
 
   function flashThenPlay(name, withInline=false){
@@ -80,12 +87,16 @@
   nav.addEventListener('click', (e)=>{
     const a = e.target.closest('a'); if(!a) return; e.preventDefault();
     const act = a.dataset.action;
+    if(act==='promo'){ flashThenPlay(cfg.VIDEO_PROMO || '프로모션.mp4', false); }
     if(act==='coupon'){ flashThenPlay(cfg.VIDEO_COUPON_APPLY || '쿠폰신청하기.mp4', true); }
     if(act==='emergency'){ flashThenPlay(cfg.VIDEO_EMERGENCY || '긴급쿠폰신청.mp4', false); }
     if(act==='participate'){ flashThenPlay(cfg.VIDEO_EMERGENCY || '긴급쿠폰신청.mp4', false); }
     if(act==='contact'){ openContact(); }
     if(act==='join'){ openJoin(); }
   });
+
+  // Console quick tester: window._check('assets/파일.mp4')
+  window._check = (p)=>fetch(p||'assets/긴급쿠폰신청.mp4', {method:'HEAD'}).then(r=>console.log(r.status, r.headers.get('content-type')));
 
   window.addEventListener('keydown', (e)=>{ if(e.key.toLowerCase()==='g'){ document.querySelector('.cm-grid').classList.toggle('show'); } });
 })();
