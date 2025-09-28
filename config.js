@@ -5,5 +5,4 @@ window.BET33_CONFIG = {
   LOGO_SRC: "assets/logo.png",
   VIDEO_COUPON_APPLY: "쿠폰신청하기.mp4",
   VIDEO_EMERGENCY: "긴급쿠폰신청.mp4",
-  FALLBACK_VIDEO: ""
 };
