@@ -1,0 +1,104 @@
+
+/* BET33 Frontpage — cm-based grid (±1cm tolerance) */
+:root{
+  --page-w: 33.88cm;
+  --header-h: 6.25cm;
+  --bar-gap: 0.6cm;
+  --monitor-h: 10.8cm; /* central screen height */
+  --monitor-w: 19cm;   /* central screen width */
+  --left-col-w: 8cm;   /* approximate from PPT */
+  --right-col-w: 6cm;  /* approximate from PPT */
+  --section-gap: 1.66cm;
+  --mini-form-h: 1.3cm;
+  --mini-form-w: 10cm;
+  --line-thick: 0.28cm;
+  --gold: linear-gradient(90deg,#f6e27a,#b8991c,#fff6d0,#b8991c,#f6e27a);
+  --blue: linear-gradient(90deg,#5ec6ff,#0b5aa0,#eaf6ff,#0b5aa0,#5ec6ff);
+  --bg: #000;
+  --text: #e9eef7;
+}
+*{box-sizing:border-box}
+html,body{height:100%;background:var(--bg);color:var(--text);margin:0;font-family:Pretendard,system-ui,Segoe UI,Apple SD Gothic Neo,Apple Color Emoji,Arial,Helvetica,sans-serif}
+.wrapper{width:var(--page-w);margin:0 auto;padding:0 0 2cm 0;position:relative}
+
+/* top gold/blue bars matching provided image */
+.topline,.bottomline{height:var(--line-thick);width:100%;position:relative}
+.topline{background:var(--gold);margin-top:0.2cm}
+.bottomline{background:var(--blue);margin-top:0.6cm}
+
+/* Header */
+.header{height:var(--header-h);display:grid;grid-template-columns:auto 1fr;align-items:flex-end;gap:1cm;padding-top:0.5cm}
+.brand{display:flex;align-items:flex-end;gap:0.6cm}
+.brand img{height:2.4cm;object-fit:contain}
+.brand .title{font-weight:900;letter-spacing:0.03em;font-size:1.6cm;line-height:1}
+.brand .subtitle{font-weight:800;color:#86d0ff;font-size:1.1cm;margin-top:0.2cm}
+.nav{display:flex;gap:0.6cm;justify-content:flex-end;padding-bottom:0.2cm}
+.nav button{font-size:0.75cm;padding:0.3cm 0.6cm;border-radius:0.3cm;border:0;background:#071521;color:#dfefff;box-shadow:0 0 0.2cm rgba(52,162,255,.35) inset, 0 0 0.15cm rgba(52,162,255,.25);cursor:pointer;transition:transform .25s ease, box-shadow .25s ease}
+.nav button:hover{transform:translateY(-1px);box-shadow:0 0 0.25cm rgba(255,255,255,.35) inset, 0 0 0.2cm rgba(255,255,255,.25)}
+.nav button.primary{background:linear-gradient(180deg,#1a2d42,#0b1f32);box-shadow:0 0 0.25cm rgba(255,215,0,.35) inset,0 0 0.2cm rgba(255,215,0,.22)}
+
+/* Grid main */
+.main{display:grid;grid-template-columns: var(--left-col-w) var(--monitor-w) var(--right-col-w);gap:0.5cm;align-items:start;margin-top:var(--section-gap)}
+.aside-left,.aside-right{min-height:5cm}
+.panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:0.4cm;padding:0.6cm;backdrop-filter:blur(6px)}
+
+/* Monitor (central screen) */
+.monitor{height:var(--monitor-h);border-radius:0.6cm;overflow:hidden;border:0.15cm solid rgba(255,255,255,.06);box-shadow:0 0 1cm rgba(0,0,0,.5) inset,0 0 0.6cm rgba(80,160,255,.18)}
+.monitor .screen{position:relative;height:100%;background:#05090f}
+.monitor .split{position:absolute;left:0;width:100%;overflow:hidden}
+.monitor .split.top{top:0;height:50%}
+.monitor .split.bottom{bottom:0;height:50%}
+.monitor .center-line{position:absolute;left:0;right:0;top:calc(50% - 1.5mm);height:3mm;background:#000}
+
+/* Banner items */
+.banner{position:absolute;top:0;height:100%;width:100%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.5cm;letter-spacing:0.04em;opacity:0;transform:translateX(10%);transition:transform 0.8s ease, opacity 0.8s ease}
+.banner.show{opacity:1;transform:translateX(0)}
+.banner.gold{background:linear-gradient(90deg,#1b1400,#3b2a00), var(--gold);background-blend-mode:overlay}
+.banner.blue{background:linear-gradient(90deg,#021625,#032c4f), var(--blue);background-blend-mode:overlay}
+
+/* Alternate wipe animation (mode 2) */
+.banner.wipe{transform:none;clip-path:inset(0 0 0 0);animation:wipeIn 1.2s ease both}
+@keyframes wipeIn{
+  0%{clip-path:inset(0 0 100% 0)}
+  100%{clip-path:inset(0 0 0 0)}
+}
+
+/* Background sweep synced with banner change */
+.bg-sweep{position:absolute;inset:0;pointer-events:none}
+.bg-sweep .top{position:absolute;top:0;height:0.8cm;width:100%;background:var(--gold);opacity:.0}
+.bg-sweep .bottom{position:absolute;bottom:0;height:0.8cm;width:100%;background:var(--blue);opacity:.0}
+.bg-sweep.active .top{animation:slideL2R 2s ease both}
+.bg-sweep.active .bottom{animation:slideR2L 2s ease both}
+@keyframes slideL2R{0%{transform:translateX(-100%);opacity:.25}100%{transform:translateX(0);opacity:.0}}
+@keyframes slideR2L{0%{transform:translateX(100%);opacity:.25}100%{transform:translateX(0);opacity:.0}}
+
+/* Mini form (ID + 횟수) */
+.inline-form{position:absolute;left:50%;bottom:0.8cm;transform:translateX(-50%);display:flex;gap:0.4cm;align-items:center;background:rgba(0,0,0,.65);padding:0.3cm 0.5cm;border-radius:0.3cm;border:1px solid rgba(255,255,255,.15)}
+.inline-form input{height:var(--mini-form-h);width:var(--mini-form-w);font-size:0.6cm;border-radius:0.2cm;border:1px solid rgba(255,255,255,.2);background:#071521;color:#e6f1ff;padding:0 0.3cm}
+.inline-form .small{width:6cm}
+.inline-form button{height:var(--mini-form-h);padding:0 0.8cm;font-size:0.6cm;border-radius:0.2cm;border:0;background:#1e87f0;color:#fff;cursor:pointer}
+
+/* Right & Left example content */
+.list{display:flex;flex-direction:column;gap:0.3cm}
+.list .item{padding:0.35cm;border-radius:0.3cm;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.12)}
+
+/* Footer notice */
+.footer{margin-top:1.2cm;font-size:0.5cm;opacity:.7}
+
+/* Modal (generic) */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:40}
+.modal.show{display:flex}
+.modal-card{width:25cm;max-width:90vw;background:#0a1522;border-radius:0.5cm;border:1px solid rgba(255,255,255,.1);padding:0.8cm;box-shadow:0 0 0.8cm rgba(0,0,0,.6)}
+.modal-card h2{margin:0 0 0.5cm 0;font-size:1.1cm}
+.modal-card .row{display:flex;gap:0.5cm;margin-bottom:0.4cm}
+.modal-card input[type="text"], .modal-card input[type="password"], .modal-card input[type="tel"]{flex:1;background:#061019;border:1px solid rgba(255,255,255,.2);border-radius:0.25cm;height:1.2cm;color:#cfe6ff;padding:0 0.4cm;font-size:0.6cm}
+.modal-card button{font-size:0.65cm;padding:0.35cm 0.7cm;border-radius:0.25cm;border:0;background:#1e87f0;color:#fff;cursor:pointer}
+.modal-card .actions{display:flex;justify-content:flex-end;gap:0.4cm;margin-top:0.5cm}
+
+/* 3-choice survey section */
+.survey .q{margin:0.4cm 0}
+.survey label{display:block;margin:0.2cm 0;font-size:0.55cm}
+
+/* Debug cm-grid overlay (toggle with G key) */
+.cm-grid{position:fixed;inset:0;background-image: repeating-linear-gradient(to right, rgba(0,255,255,.08) 0, rgba(0,255,255,.08) 1px, transparent 1px, transparent 1cm), repeating-linear-gradient(to bottom, rgba(255,0,255,.08) 0, rgba(255,0,255,.08) 1px, transparent 1px, transparent 1cm); pointer-events:none;display:none;z-index:100}
+.cm-grid.show{display:block}

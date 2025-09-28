@@ -1,0 +1,86 @@
+
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>BET33 비공식 파트너</title>
+<link rel="stylesheet" href="styles.css"/>
+<script defer src="config.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<div class="cm-grid" id="cmGrid"></div>
+<div class="wrapper">
+  <div class="header">
+    <div class="brand">
+      <img src="assets/logo.png" alt="BET33 비공식 파트너 로고" onerror="this.style.display='none'">
+      <div>
+        <div class="title">BET33</div>
+        <div class="subtitle">비공식 파트너</div>
+      </div>
+    </div>
+    <div>
+      <div class="topline"></div>
+      <div class="nav">
+        <button data-action="promo">프로모션</button>
+        <button data-action="coupon">쿠폰신청</button>
+        <button data-action="participate">프로모션참여</button>
+        <button data-action="contact">문의</button>
+        <button data-action="emergency" class="primary">긴급쿠폰신청</button>
+        <button data-action="join" class="primary">가입하기</button>
+      </div>
+      <div class="bottomline"></div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="aside-left panel">
+      <h3 style="margin-top:0">안내</h3>
+      <div class="list">
+        <div class="item">상단: 금빛 라인 좌→우 스윕</div>
+        <div class="item">하단: 청빛 라인 우→좌 스윕</div>
+        <div class="item">프로모션 배너: 4초 간격 자동 전환</div>
+      </div>
+    </div>
+
+    <div class="monitor panel">
+      <div class="screen" id="screen">
+        <div class="bg-sweep" id="bgSweep">
+          <div class="top"></div>
+          <div class="bottom"></div>
+        </div>
+        <div class="split top">
+          <div class="banner gold" id="topBanner">상단 배너</div>
+        </div>
+        <div class="center-line"></div>
+        <div class="split bottom">
+          <div class="banner blue" id="bottomBanner">하단 설명</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aside-right panel">
+      <h3 style="margin-top:0">프로필/연결</h3>
+      <div class="list">
+        <div class="item">파트너 코드 링크</div>
+        <div class="item">카카오/텔레 체크</div>
+        <div class="item">이벤트 요약</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div>© BET33 비공식 파트너. 본 페이지의 이벤트는 비공식적으로 진행됩니다.</div>
+    <div>키보드 G : cm 그리드 보기/숨기기</div>
+  </div>
+</div>
+
+<!-- Generic Modal -->
+<div class="modal" id="modal">
+  <div class="modal-card" id="modalCard">
+    <!-- dynamic content via JS -->
+  </div>
+</div>
+</body>
+</html>
