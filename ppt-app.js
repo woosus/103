@@ -2,20 +2,34 @@
 (()=>{
   const cfg = window.BET33_CONFIG || {};
   const monitor = document.getElementById('monitor');
-  const nav = document.querySelector('.nav');
+  const triTL = document.getElementById('triTL');
+  const triBR = document.getElementById('triBR');
+  const hlineX = document.getElementById('hlineX');
   const flashBlack = document.getElementById('flashBlack');
   const flashWhite = document.getElementById('flashWhite');
-  const hlineX = document.getElementById('hlineX');
+  const nav = document.querySelector('.nav');
 
-  function positionHLine(){
+  function recalc(){
+    const gold = document.getElementById('goldline').getBoundingClientRect().bottom + window.scrollY;
     const r = monitor.getBoundingClientRect();
-    const h = parseFloat(getComputedStyle(hlineX).height) || 0;
-    const top = Math.round(r.top + (r.height/2) - (h/2) + window.scrollY);
-    hlineX.style.top = `${Math.max(top, 0)}px`;
+    const centerY = Math.round(r.top + window.scrollY + r.height/2);
+    const hbarH = parseFloat(getComputedStyle(hlineX).height)||0;
+    hlineX.style.top = `${centerY - hbarH/2}px`;
+
+    const tlH = Math.max(centerY - gold, 0);
+    triTL.style.top = `${gold}px`;
+    triTL.style.height = `${tlH}px`;
+    triTL.style.clipPath = `polygon(0 0, 100% 0, 0 100%)`;
+
+    const docH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    const brH = Math.max(docH - centerY, 0);
+    triBR.style.top = `${centerY}px`;
+    triBR.style.height = `${brH}px`;
+    triBR.style.clipPath = `polygon(100% 0, 100% 100%, 0 100%)`;
   }
-  window.addEventListener('resize', positionHLine);
-  window.addEventListener('scroll', positionHLine, {passive:true});
-  window.addEventListener('load', positionHLine);
+  window.addEventListener('resize', recalc);
+  window.addEventListener('scroll', recalc, {passive:true});
+  window.addEventListener('load', recalc);
 
   function buildCandidates(name){
     const out = new Set([name,'쿠폰신청하기.mp4','쿠폰신청하기1.mp4','긴급쿠폰신청.mp4','긴급쿠폰신청1.mp4']);
@@ -27,7 +41,6 @@
     Object.assign(V,{autoplay:true,muted:true,playsInline:true,preload:'auto',style:'border-radius:0.3cm;'});
     buildCandidates(name).forEach(s=>{ const so=document.createElement('source'); so.src=s; V.appendChild(so); });
 
-    // 0.2초 안에서: 검정 (~60ms) -> 흰색 (~60ms) -> 재생 시작
     flashBlack.style.display='block';
     setTimeout(()=>{
       flashBlack.style.display='none';
